@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import AddFieldForm from "@/components/AddFieldForm";
 import {useDispatch, useSelector} from "react-redux";
-import {addField, deleteField} from "@/redux/FieldSlice";
+import {addField, deleteField, updateField} from "@/redux/FieldSlice";
 import {RootState} from "@/store/store";
+import EditFieldForm from "@/components/EditFieldForm";
 
 const Field = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const dispatch = useDispatch();
     const fields = useSelector((state:RootState)=>state.field)
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [currentField, setCurrentField] = useState(null);
 
     const [formData, setFormData] = useState({
         fieldCode: '',
@@ -65,7 +68,16 @@ const Field = () => {
     };
 
     const handleEditField = (field) => {
-        console.log("Editing field:", field);
+        setCurrentField(field);
+        setIsEditModalOpen(true); // Open the edit modal
+    };
+
+    const handleEditSubmit = (formData) => {
+        if (validateForm()) {
+            dispatch(updateField(formData));
+            setIsEditModalOpen(false);
+            resetForm();
+        }
     };
 
     const handleDeleteField = (fieldCode) => {
@@ -208,6 +220,19 @@ const Field = () => {
                         resetForm={resetForm}
                     />
                 )}
+
+                {/* Edit Field Modal */}
+                {isEditModalOpen && (
+                    <EditFieldForm
+                        isOpen={isEditModalOpen}
+                        onClose={() => setIsEditModalOpen(false)}
+                        onSubmit={handleEditSubmit}
+                        field={currentField}
+                        handleInputChange={handleInputChange}
+                        errors={errors}
+                    />
+                )}
+
             </section>
         </div>
     );
