@@ -1,7 +1,9 @@
-import Navbar from "./components/Navbar.tsx";
-import Dashboard from "./pages/Dashboard.tsx";
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import SideNavbar from "./components/SideNavbar.tsx";
+import SideNavbar from "./components/SideNavbar";
+import Field from "@/pages/Field";
+import React from "react";
 
 function App() {
     return (
@@ -12,6 +14,7 @@ function App() {
                     <SideNavbar />
                     <Routes>
                         <Route path="/" element={<Dashboard/>}/>
+                        <Route path="/field" element={<Field/>}/>
                     </Routes>
                 </div>
             </div>
