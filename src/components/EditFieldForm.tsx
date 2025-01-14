@@ -1,165 +1,91 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {Label} from "@/components/ui/label";
+import { FieldModel } from "@/model/FieldModel";
+import { updateField } from "@/redux/FieldSlice";
+import { useDispatch } from "react-redux";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import FieldInputModel from "@/components/FieldInputModel";
 
-const EditFieldForm = ({ isOpen, onClose, onSubmit, field }) => {
-    const [formData, setFormData] = useState({
-        fieldCode: '',
-        fieldName: '',
-        fieldLocation: '',
-        fieldSize: '',
-        img_1: null,
-        img_2: null
-    });
-
-    const [errors, setErrors] = useState({
-        fieldName: false,
-        fieldLocation: false,
-        fieldSize: false,
-        img_1: false,
-        img_2: false
-    });
+const EditFieldForm = ({ isOpen, onClose, fieldData }) => {
+    const [fieldCode, setFieldCode] = useState("");
+    const [fieldName, setFieldName] = useState("");
+    const [fieldLocation, setFieldLocation] = useState("");
+    const [fieldSize, setFieldSize] = useState("");
+    const [img_1, setImg_1] = useState<File | null>(null);
+    const [img_2, setImg_2] = useState<File | null>(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if (field) {
-            setFormData({
-                ...field
-            });
+        if (isOpen && fieldData) {
+            setFieldCode(fieldData.fieldCode);
+            setFieldName(fieldData.fieldName);
+            setFieldLocation(fieldData.fieldLocation);
+            setFieldSize(fieldData.fieldSize);
+            setImg_1(fieldData.img_1);
+            setImg_2(fieldData.img_2);
         }
-    }, [field]);
+    }, [isOpen, fieldData]);
 
-    const handleInputChange = (e) => {
-        const { id, value, type, files } = e.target;
-
-        setFormData(prev => ({
-            ...prev,
-            [id]: type === 'file' ? files[0] : value
-        }));
-
-        if (errors[id]) {
-            setErrors(prev => ({
-                ...prev,
-                [id]: false
-            }));
-        }
-    };
-
-    const validateForm = () => {
-        const newErrors = {
-            fieldName: formData.fieldName.length < 5 || formData.fieldName.length > 20,
-            fieldLocation: formData.fieldLocation.length < 7,
-            fieldSize: !formData.fieldSize || Number(formData.fieldSize) <= 0
-        };
-
-        setErrors(newErrors);
-        return !Object.values(newErrors).some(error => error);
-    };
-
-    const handleSubmit = (e) => {
+    function handleSubmit(e) {
         e.preventDefault();
-        if (validateForm()) {
-            onSubmit(formData);
-        }
-    };
-
-    if (!isOpen) return null;
+        const fieldModel = new FieldModel(
+            fieldCode,
+            fieldName,
+            fieldLocation,
+            fieldSize,
+            img_1,
+            img_2
+        );
+        dispatch(updateField(fieldModel));
+        onClose();
+    }
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white rounded-lg p-8 max-w-md w-full">
-                <h2 className="text-2xl font-bold mb-6">Edit Field</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <Label htmlFor="fieldName" className="text-sm font-medium text-zinc-700">
-                            Field Name
-                        </Label>
-                        <Input
-                            type="text"
-                            id="fieldName"
-                            value={formData.fieldName}
-                            onChange={handleInputChange}
-                            placeholder="Field Name"
-                            className={errors.fieldName ? 'border-red-500' : ''}
-                        />
-                        {errors.fieldName && (
-                            <p className="text-red-500 text-sm">Field name must be between 5 and 20 characters</p>
-                        )}
-                    </div>
+        <Dialog open={isOpen} onOpenChange={(open) => {
+            if (!open) {
+                onClose();
+            }
+        }}>
+            <DialogContent className="bg-white rounded-lg p-8 max-w-md w-full">
+                <DialogHeader>
+                    <DialogTitle className="text-2xl font-bold text-zinc-900">Edit Field</DialogTitle>
+                </DialogHeader>
 
-                    <div>
-                        <Label htmlFor="fieldLocation" className="text-sm font-medium text-zinc-700">
-                            Location
-                        </Label>
-                        <Input
-                            type="text"
-                            id="fieldLocation"
-                            value={formData.fieldLocation}
-                            onChange={handleInputChange}
-                            placeholder="Field Location"
-                            className={errors.fieldLocation ? 'border-red-500' : ''}
-                        />
-                        {errors.fieldLocation && (
-                            <p className="text-red-500 text-sm">Location must be at least 7 characters</p>
-                        )}
-                    </div>
-
-                    <div>
-                        <Label htmlFor="fieldSize" className="text-sm font-medium text-zinc-700">
-                            Size (in sq. ft)
-                        </Label>
-                        <Input
-                            type="number"
-                            id="fieldSize"
-                            value={formData.fieldSize}
-                            onChange={handleInputChange}
-                            placeholder="Field Size"
-                            className={errors.fieldSize ? 'border-red-500' : ''}
-                        />
-                        {errors.fieldSize && (
-                            <p className="text-red-500 text-sm">Field size must be greater than 0</p>
-                        )}
-                    </div>
-
-                    <div>
-                        <Label htmlFor="fieldImage" className="text-sm font-medium text-zinc-700">
-                            Upload Image 1
-                        </Label>
-                        <Input
-                            type="file"
-                            id="img_1"
-                            onChange={handleInputChange}
-                            className="mb-2"
-                        />
-                    </div>
-
-                    <div>
-                        <Label htmlFor="fieldImage2" className="text-sm font-medium text-zinc-700">
-                            Upload Image 2
-                        </Label>
-                        <Input
-                            type="file"
-                            id="img_2"
-                            onChange={handleInputChange}
-                            className="mb-2"
-                        />
-                    </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <FieldInputModel
+                        setFieldCode={setFieldCode}
+                        setFieldName={setFieldName}
+                        setFieldLocation={setFieldLocation}
+                        setFieldSize={setFieldSize}
+                        setImg_1={setImg_1}
+                        setImg_2={setImg_2}
+                        fieldCode={fieldCode}
+                        fieldName={fieldName}
+                        fieldLocation={fieldLocation}
+                        fieldSize={fieldSize}
+                        img_1={img_1}
+                        img_2={img_2}
+                    />
 
                     <div className="flex justify-end space-x-4">
                         <Button
                             type="button"
-                            onClick={onClose}
                             variant="outline"
+                            onClick={onClose}
+                            className="border-zinc-200 text-zinc-700 hover:bg-zinc-100"
                         >
                             Cancel
                         </Button>
-                        <Button type="submit">
-                            Save Changes
+                        <Button
+                            type="submit"
+                            className="bg-zinc-900 text-white hover:bg-z inc-800"
+                        >
+                            Save Field
                         </Button>
                     </div>
                 </form>
-            </div>
-        </div>
+            </DialogContent>
+        </Dialog>
     );
 };
 

@@ -1,110 +1,29 @@
 import React, { useState } from 'react';
 import AddFieldForm from "@/components/AddFieldForm";
 import {useDispatch, useSelector} from "react-redux";
-import {addField, deleteField, updateField} from "@/redux/FieldSlice";
 import {RootState} from "@/store/store";
 import EditFieldForm from "@/components/EditFieldForm";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
+import {deleteField} from "@/redux/FieldSlice";
 
 const Field = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-    const dispatch = useDispatch();
     const fields = useSelector((state:RootState)=>state.field)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [currentField, setCurrentField] = useState(null);
-
-    const [formData, setFormData] = useState({
-        fieldCode: '',
-        fieldName: '',
-        fieldLocation: '',
-        fieldSize: '',
-        img_1: null,
-        img_2: null
-    });
+    const [currentFieldData, setCurrentFieldData] = useState(null);
 
 
-    const [errors, setErrors] = useState({
-        fieldName: false,
-        fieldLocation: false,
-        fieldSize: false,
-        img_1: false,
-        img_2: false
-    });
-
-    const handleInputChange = (e) => {
-        const { id, value, type, files } = e.target;
-
-        setFormData(prev => ({
-            ...prev,
-            [id]: type === 'file' ? files[0] : value
-        }));
-
-        if (errors[id]) {
-            setErrors(prev => ({
-                ...prev,
-                [id]: false
-            }));
-        }
-    };
-
-    const validateForm = () => {
-        const newErrors = {
-            fieldName: formData.fieldName.length < 5 || formData.fieldName.length > 20,
-            fieldLocation: formData.fieldLocation.length < 7,
-            fieldSize: !formData.fieldSize || Number(formData.fieldSize) <= 0
-        };
-
-        return !Object.values(newErrors).some(error => error);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (validateForm()) {
-            console.log('Form submitted:', formData)
-            dispatch(addField(formData))
-            setIsAddModalOpen(false);
-            resetForm();
-        }
-    };
-
-    const handleEditField = (field) => {
-        setCurrentField(field);
-        setIsEditModalOpen(true); // Open the edit modal
-    };
-
-    const handleEditSubmit = (formData) => {
-        dispatch(updateField({
-            ...formData,
-            fieldCode: currentField.fieldCode
-        }));
-        setIsEditModalOpen(false);
-        setCurrentField(null);
-    };
+    const dispatch = useDispatch();
 
     const handleDeleteField = (fieldCode) => {
         console.log("Deleting field with code:", fieldCode);
         dispatch(deleteField(fieldCode));
     };
 
-
-    const resetForm = () => {
-        setFormData({
-            fieldCode: '',
-            fieldName: '',
-            fieldLocation: '',
-            fieldSize: '',
-            img_1: null,
-            img_2: null
-        });
-        setErrors({
-            fieldName: false,
-            fieldLocation: false,
-            fieldSize: false,
-            img_1: false,
-            img_2: false
-        });
+    const handleEditButtonClick = (field) => {
+        setCurrentFieldData(field);
+        setIsEditModalOpen(true);
     };
 
     return (
@@ -190,7 +109,7 @@ const Field = () => {
                                     <td className="p-4 space-x-2">
                                         <button
                                             className="text-blue-500 hover:underline"
-                                            onClick={() => handleEditField(field)}
+                                            onClick={() => handleEditButtonClick(field)}
                                         >
                                             Edit
                                         </button>
@@ -213,11 +132,6 @@ const Field = () => {
                     <AddFieldForm
                         isOpen={isAddModalOpen}
                         onClose={() => setIsAddModalOpen(false)}
-                        onSubmit={handleSubmit}
-                        formData={formData}
-                        handleInputChange={handleInputChange}
-                        errors={errors}
-                        resetForm={resetForm}
                     />
                 )}
 
@@ -226,8 +140,7 @@ const Field = () => {
                     <EditFieldForm
                         isOpen={isEditModalOpen}
                         onClose={() => setIsEditModalOpen(false)}
-                        onSubmit={handleEditSubmit}
-                        field={currentField}
+                        fieldData={currentFieldData}
                     />
                 )}
 
