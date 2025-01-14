@@ -7,10 +7,10 @@ const FieldModel = (props:any) => {
     return (
         <div>
             <Card className="border border-zinc-200">
-                <CardContent className="pt-6">
-                    <div className="space-y-6">
+                <CardContent className="pt-2">
+                    <div className="space-y-4">
                         {/* Field Code */}
-                        <div className="space-y-2">
+                        <div>
                             <Label htmlFor="fieldCode" className="text-sm font-medium text-zinc-700">
                                 Field Code
                             </Label>
@@ -25,7 +25,7 @@ const FieldModel = (props:any) => {
                         </div>
 
                         {/* Field Name */}
-                        <div className="space-y-2">
+                        <div>
                             <Label htmlFor="fieldName" className="text-sm font-medium text-zinc-700">
                                 Field Name
                             </Label>
@@ -46,7 +46,7 @@ const FieldModel = (props:any) => {
                         </div>
 
                         {/* Location */}
-                        <div className="space-y-2">
+                        <div>
                             <Label htmlFor="fieldLocation" className="text-sm font-medium text-zinc-700">
                                 Location
                             </Label>
@@ -67,7 +67,7 @@ const FieldModel = (props:any) => {
                         </div>
 
                         {/* Size */}
-                        <div className="space-y-2">
+                        <div>
                             <Label htmlFor="fieldSize" className="text-sm font-medium text-zinc-700">
                                 Size (in sq. ft)
                             </Label>
@@ -88,7 +88,7 @@ const FieldModel = (props:any) => {
                         </div>
 
                         {/* Image Upload 1 */}
-                        <div className="space-y-2">
+                        <div>
                             <Label htmlFor="fieldImage" className="text-sm font-medium text-zinc-700">
                                 Upload Image 1
                             </Label>
@@ -102,7 +102,7 @@ const FieldModel = (props:any) => {
                         </div>
 
                         {/* Image Upload 2 */}
-                        <div className="space-y-2">
+                        <div>
                             <Label htmlFor="fieldImage2" className="text-sm font-medium text-zinc-700">
                                 Upload Image 2
                             </Label>

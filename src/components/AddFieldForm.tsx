@@ -12,7 +12,7 @@ const AddFieldForm = ({ isOpen, onClose, onSubmit, formData, handleInputChange, 
                 resetForm();
             }
         }}>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="bg-white rounded-lg p-8 max-w-md w-full">
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-bold text-zinc-900">Add New Field</DialogTitle>
                 </DialogHeader>

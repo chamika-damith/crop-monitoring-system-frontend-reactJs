@@ -15,10 +15,10 @@ const FieldSlice=createSlice({
         },
         updateField: (state, action) => {
             const index = state.findIndex(field => field.fieldCode === action.payload.fieldCode);
-            if (index >= 0) {
+            if (index !== -1) {
                 state[index] = action.payload;
             }
-        },
+        }
     }
 })
 

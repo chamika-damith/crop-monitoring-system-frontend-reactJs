@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {addField, deleteField, updateField} from "@/redux/FieldSlice";
 import {RootState} from "@/store/store";
 import EditFieldForm from "@/components/EditFieldForm";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
 
 const Field = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -73,11 +75,12 @@ const Field = () => {
     };
 
     const handleEditSubmit = (formData) => {
-        if (validateForm()) {
-            dispatch(updateField(formData));
-            setIsEditModalOpen(false);
-            resetForm();
-        }
+        dispatch(updateField({
+            ...formData,
+            fieldCode: currentField.fieldCode
+        }));
+        setIsEditModalOpen(false);
+        setCurrentField(null);
     };
 
     const handleDeleteField = (fieldCode) => {
@@ -114,23 +117,20 @@ const Field = () => {
                             <p className="text-gray-500">Manage your field and view</p>
                         </div>
                         <div className="flex space-x-4">
-                            <div className="flex space-x-4">
-                                <div className="flex ml-5 rounded-md shadow-sm items-center ring-1 ring-inset ring-gray-300 sm:max-w-md">
-                                    <i className="fa-solid fa-magnifying-glass ml-2 mr-1 text-gray-500 cursor-pointer"></i>
-                                    <input
-                                        type="text"
-                                        className="block flex-1 w-32 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 sm:text-sm/6 sm:w-72"
-                                        placeholder="Search..."
-                                    />
-                                </div>
+                            <div className="flex">
+                                <Input
+                                    type="text"
+                                    id="searchField"
+                                    className="bg-zinc-100/50 text-zinc-500 w-64"
+                                    placeholder="Search.."
+                                />
                             </div>
-                            <button
+                            <Button
                                 onClick={() => setIsAddModalOpen(true)}
-                                className="bg-gradient-to-r from-indigo-500 to-blue-600 text-white px-6 py-3 rounded-lg flex items-center space-x-2 shadow-lg hover:opacity-90 transition duration-200"
+                                className=" text-white px-6 py-3 rounded-lg flex items-center space-x-2 shadow-lg "
                             >
-                                <span className="text-lg font-bold">+</span>
-                                <span>Add Field</span>
-                            </button>
+                                + Add Field
+                            </Button>
                         </div>
                     </div>
 
@@ -138,7 +138,7 @@ const Field = () => {
                     <div className="bg-white shadow-xl rounded-lg overflow-hidden">
                         <table className="w-full text-center">
                             <thead>
-                            <tr className="bg-gradient-to-r from-indigo-200 to-blue-200 text-gray-700">
+                            <tr className="bg-gradient-to-r from-gray-300 to-gray-300 text-gray-950">
                                 <th className="p-4 font-semibold text-gray-600">Code</th>
                                 <th className="p-4 font-semibold text-gray-600">Name</th>
                                 <th className="p-4 font-semibold text-gray-600">Location</th>
@@ -228,8 +228,6 @@ const Field = () => {
                         onClose={() => setIsEditModalOpen(false)}
                         onSubmit={handleEditSubmit}
                         field={currentField}
-                        handleInputChange={handleInputChange}
-                        errors={errors}
                     />
                 )}
 
