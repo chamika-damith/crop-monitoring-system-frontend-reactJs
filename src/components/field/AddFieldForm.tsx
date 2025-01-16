@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
-import FieldInputModel from "@/components/FieldInputModel";
+import FieldInputModel from "@/components/field/FieldInputModel";
 import {addField} from "@/redux/FieldSlice";
 import {useDispatch} from "react-redux";
 import {FieldModel} from "@/model/FieldModel";

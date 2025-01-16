@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import SideNavbar from "./components/SideNavbar";
 import Field from "@/pages/Field";
 import React from "react";
+import Crop from "@/pages/Crop";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Dashboard/>}/>
                         <Route path="/field" element={<Field/>}/>
+                        <Route path="/crop" element={<Crop/>}/>
                     </Routes>
                 </div>
             </div>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import AddFieldForm from "@/components/AddFieldForm";
+import AddFieldForm from "@/components/field/AddFieldForm";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/store/store";
-import EditFieldForm from "@/components/EditFieldForm";
+import EditFieldForm from "@/components/field/EditFieldForm";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {deleteField} from "@/redux/FieldSlice";

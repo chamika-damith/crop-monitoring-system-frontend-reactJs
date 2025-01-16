@@ -4,7 +4,7 @@ import { FieldModel } from "@/model/FieldModel";
 import { updateField } from "@/redux/FieldSlice";
 import { useDispatch } from "react-redux";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import FieldInputModel from "@/components/FieldInputModel";
+import FieldInputModel from "@/components/field/FieldInputModel";
 
 const EditFieldForm = ({ isOpen, onClose, fieldData }) => {
     const [fieldCode, setFieldCode] = useState("");
