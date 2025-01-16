@@ -5,6 +5,7 @@ import SideNavbar from "./components/SideNavbar";
 import Field from "@/pages/Field";
 import React from "react";
 import Crop from "@/pages/Crop";
+import Staff from "@/pages/Staff";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                         <Route path="/" element={<Dashboard/>}/>
                         <Route path="/field" element={<Field/>}/>
                         <Route path="/crop" element={<Crop/>}/>
+                        <Route path="/staff" element={<Staff/>}/>
                     </Routes>
                 </div>
             </div>

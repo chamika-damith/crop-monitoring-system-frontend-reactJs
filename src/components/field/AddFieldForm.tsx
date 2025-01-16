@@ -31,7 +31,6 @@ const AddFieldForm = ({isOpen, onClose}) => {
         dispatch(addField(fieldModel))
         onClose();
     };
-
     return (
         <Dialog open={isOpen} onOpenChange={(open) => {
             if (!open) {
