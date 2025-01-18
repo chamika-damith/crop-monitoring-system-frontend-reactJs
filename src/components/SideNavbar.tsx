@@ -9,6 +9,7 @@ import {
     faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
+import React from "react";
 
 const SideNavbar = () => {
     return (

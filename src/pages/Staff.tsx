@@ -6,6 +6,7 @@ import {deleteStaff} from "@/redux/StaffSlice";
 import {Button} from "@/components/ui/button";
 import EditStaffForm from "@/components/staff/EditStaffForm";
 import ViewStaff from "@/components/staff/ViewStaff";
+import {Input} from "@/components/ui/input";
 
 const Staff = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -41,12 +42,10 @@ const Staff = () => {
                             <p className="text-gray-500">Manage your staff and view</p>
                         </div>
                         <div className="flex space-x-4">
-                            <div className="flex space-x-4">
-                                <div
-                                    className="flex ml-5 rounded-md shadow-sm items-center ring-1 ring-inset ring-gray-300 sm:max-w-md">
-                                    <i className="fa-solid fa-magnifying-glass ml-2 mr-1 text-gray-500 cursor-pointer"></i>
-                                    <input type="text"
-                                           className="block flex-1 w-32 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 sm:text-sm/6 sm:w-72"
+                            <div>
+                                <div>
+                                    <Input type="text"
+                                           className="bg-zinc-100/50 text-zinc-500 w-64"
                                            placeholder="Search..."
                                            id="staffSearchId"/>
                                 </div>

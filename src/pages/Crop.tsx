@@ -34,7 +34,7 @@ const Crop = () => {
                             <p className="text-gray-500">Manage your crop and view</p>
                         </div>
                         <div className="flex space-x-4">
-                            <div className="flex space-x-4">
+                            <div>
                                 <div
                                     className="flex">
                                     <Input type="text"

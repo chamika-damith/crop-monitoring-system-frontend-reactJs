@@ -21,10 +21,10 @@ const AddCropForm = ({ isOpen, onClose }) => {
         e.preventDefault();
         const cropModel = new CropModel(
             cropCode,
-            cropName,
-            cropScientificName,
+           cropScientificName,
             cropCategory,
             cropField,
+            cropName,
             cropSeason,
             cropImage
         );
