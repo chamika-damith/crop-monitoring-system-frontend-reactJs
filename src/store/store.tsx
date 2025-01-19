@@ -3,6 +3,7 @@ import FieldSlice from "@/redux/FieldSlice";
 import CropSlice from "@/redux/CropSlice";
 import StaffSlice from "@/redux/StaffSlice";
 import VehicleSlice from "@/redux/VehicleSlice";
+import EquipmentSlice from "@/redux/EquipmentSlice";
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         crop:CropSlice,
         staff:StaffSlice,
         vehicle:VehicleSlice,
+        equipment:EquipmentSlice,
     },
 });
 
