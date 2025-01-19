@@ -1,7 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faClipboardList,
-    faHouse,
+import {faHouse,
     faLeaf,
     faSeedling,
     faTools,
@@ -85,18 +83,6 @@ const SideNavbar = () => {
                         </Link>
                         <span className="tooltip hidden group-hover:block absolute left-16 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg">
                             Equipment
-                        </span>
-                    </div>
-
-                    {/* Log Button */}
-                    <div className="group relative mt-auto" id="logBtn">
-                        <Link to="/log" className="text-gray-500 hover:text-gray-900">
-                            <div className="w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-200">
-                                <FontAwesomeIcon icon={faClipboardList} />
-                            </div>
-                        </Link>
-                        <span className="tooltip hidden group-hover:block absolute left-16 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg">
-                            Log
                         </span>
                     </div>
                 </div>

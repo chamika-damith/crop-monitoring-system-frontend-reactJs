@@ -7,6 +7,7 @@ import React from "react";
 import Crop from "@/pages/Crop";
 import Staff from "@/pages/Staff";
 import Vehicle from "@/pages/Vehicle";
+import Equipment from "@/pages/Equipment";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                         <Route path="/crop" element={<Crop/>}/>
                         <Route path="/staff" element={<Staff/>}/>
                         <Route path="/vehicle" element={<Vehicle/>}/>
+                        <Route path="/equipment" element={<Equipment/>}/>
                     </Routes>
                 </div>
             </div>
