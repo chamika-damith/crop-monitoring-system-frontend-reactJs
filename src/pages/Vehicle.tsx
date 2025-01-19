@@ -2,9 +2,28 @@ import React, {useState} from 'react'
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import AddVehicleForm from "@/components/vehicle/AddVehicleForm";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/store/store";
+import {deleteVehicle} from "@/redux/VehicleSlice";
+import EditVehicleForm from "@/components/vehicle/EditVehicleForm";
 
 const Vehicle = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const vehicles = useSelector((state:RootState)=>state.vehicle)
+    const dispatch = useDispatch();
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [currentVehicleData, setCurrentVehicleData] = useState(null);
+
+
+    const handleDeleteVehicle = (vehicleId) => {
+        console.log("Deleting field with code:", vehicleId);
+        dispatch(deleteVehicle(vehicleId));
+    };
+
+    const handleEditButtonClick = (vehicle) => {
+        setCurrentVehicleData(vehicle);
+        setIsEditModalOpen(true);
+    };
 
     return (
         <div className="w-full p-6 space-y-2 md:space-y-0 md:px-8">
@@ -56,86 +75,51 @@ const Vehicle = () => {
                                 <th className="p-4 font-semibold text-gray-600">Action</th>
                             </tr>
                             </thead>
-                            <tbody id="vehicleTableBody"></tbody>
+                            <tbody>
+                            {vehicles.map((vehicle) => (
+                                <tr key={vehicle.vehicleId} className="hover:bg-gray-100">
+                                    <td className="p-4">{vehicle.vehicleId}</td>
+                                    <td className="p-4">{vehicle.licensePlateNumber}</td>
+                                    <td className="p-4">{vehicle.vehicleCategory}</td>
+                                    <td className="p-4">{vehicle.fuelType}</td>
+                                    <td className="p-4">{vehicle.status}</td>
+                                    <td className="p-4">{vehicle.allocatedStaff}</td>
+                                    <td className="p-4">{vehicle.remarks}</td>
+                                    <td className="p-4 space-x-2">
+                                        <button
+                                            onClick={() => handleEditButtonClick(vehicle)}
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            onClick={() => handleDeleteVehicle(vehicle.vehicleId)}
+                                            className="text-red-500 hover:underline"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
                         </table>
                     </div>
                 </div>
 
-                <div id="editVehicleModal"
-                     className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
-                    <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                        <h2 className="text-xl font-bold mb-4">Edit Vehicle</h2>
-                        <form id="editVehicleForm">
-                            <div className="mb-4">
-                                <label htmlFor="editvehicleId" className="block mb-2">Vehicle Id</label>
-                                <input type="text" id="editvehicleId"
-                                       className="border border-gray-300 bg-gray-200 rounded w-full p-2" readOnly/>
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="editLicensePlateNumber" className="block mb-2">License Plate
-                                    Number</label>
-                                <input type="text" id="editLicensePlateNumber"
-                                       className="border border-gray-300 rounded w-full p-2" required/>
-                                <span className="errorMessageEditlicensePlateNumber text-red-500 hidden text-xs">
-                                            licensePlateNumber is required.
-                                        </span>
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="editVehicleCategory" className="block mb-2">Vehicle Category</label>
-                                <input type="text" id="editVehicleCategory"
-                                       className="border border-gray-300 rounded w-full p-2" required/>
-                                <span className="errorMessageEditlicensePlateNumber text-red-500 hidden text-xs">
-                                            vehicleCategory is required.
-                                        </span>
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="editFuelType" className="block mb-2">Fuel Type</label>
-                                <select id="editFuelType" className="border border-gray-300 rounded w-full p-2"
-                                        required>
-                                    <option value="">Select Fuel Type</option>
-                                    <option value="Petrol">Petrol</option>
-                                    <option value="Diesel">Diesel</option>
-                                    <option value="Electric">Electric</option>
-                                    <option value="Hybrid">Hybrid</option>
-                                </select>
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="editStatus" className="block mb-2">Status</label>
-                                <select id="editStatus" className="border border-gray-300 rounded w-full p-2"
-                                        required>
-                                    <option value="Available">Available</option>
-                                    <option value="Out of Service">Out of Service</option>
-                                </select>
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="allocatedEditStaff" className="block mb-2">Allocated Staff Member
-                                    Details</label>
-                                <select id="allocatedEditStaff"
-                                        className="border border-gray-300 rounded w-full p-2" required></select>
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="editRemarks" className="block mb-2">Remarks</label>
-                                <textarea id="editRemarks" className="border border-gray-300 rounded w-full p-2"
-                                          placeholder="Any special remarks or N/A"></textarea>
-                            </div>
-                            <div className="flex justify-end">
-                                <button type="button" id="closeEditVehicleModal"
-                                        className="bg-red-500 text-white px-4 py-2 rounded mr-2">
-                                    Cancel
-                                </button>
-                                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-                                    Save Changes
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </section>
 
             {isAddModalOpen && (
                 <AddVehicleForm
                     isOpen={isAddModalOpen}
                     onClose={() => setIsAddModalOpen(false)}
+                />
+            )}
+
+            {isEditModalOpen && (
+                <EditVehicleForm
+                    isOpen={isEditModalOpen}
+                    onClose={() => setIsEditModalOpen(false)}
+                    vehicle={currentVehicleData}
                 />
             )}
         </div>
