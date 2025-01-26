@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { FieldModel } from "@/model/FieldModel";
-import { updateField } from "@/redux/FieldSlice";
 import { useDispatch } from "react-redux";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import FieldInputModel from "@/components/field/FieldInputModel";
+import {getAllField, updateField} from "@/redux/FieldSlice";
 
 const EditFieldForm = ({ isOpen, onClose, fieldData }) => {
     const [fieldCode, setFieldCode] = useState("");
@@ -26,7 +26,7 @@ const EditFieldForm = ({ isOpen, onClose, fieldData }) => {
         }
     }, [isOpen, fieldData]);
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         const fieldModel = new FieldModel(
             fieldCode,
@@ -36,7 +36,8 @@ const EditFieldForm = ({ isOpen, onClose, fieldData }) => {
             img_1,
             img_2
         );
-        dispatch(updateField(fieldModel));
+        await dispatch(updateField(fieldModel));
+        dispatch(getAllField());
         onClose();
     }
 

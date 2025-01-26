@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
 import FieldInputModel from "@/components/field/FieldInputModel";
-import {addField} from "@/redux/FieldSlice";
 import {useDispatch} from "react-redux";
 import {FieldModel} from "@/model/FieldModel";
+import {saveField} from "@/redux/FieldSlice";
 
 const AddFieldForm = ({isOpen, onClose}) => {
 
@@ -28,7 +28,7 @@ const AddFieldForm = ({isOpen, onClose}) => {
             img_2
         );
         console.log('Form submitted:', fieldModel)
-        dispatch(addField(fieldModel))
+        dispatch(saveField(fieldModel))
         onClose();
     };
     return (

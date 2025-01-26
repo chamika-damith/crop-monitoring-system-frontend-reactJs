@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import AddFieldForm from "@/components/field/AddFieldForm";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/store/store";
 import EditFieldForm from "@/components/field/EditFieldForm";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
-import {deleteField} from "@/redux/FieldSlice";
+import {deleteField, getAllField} from "@/redux/FieldSlice";
 
 const Field = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -16,9 +16,14 @@ const Field = () => {
 
     const dispatch = useDispatch();
 
-    const handleDeleteField = (fieldCode) => {
+    useEffect(() => {
+        dispatch(getAllField());
+    }, [dispatch]);
+
+    async function handleDeleteField(fieldCode) {
         console.log("Deleting field with code:", fieldCode);
-        dispatch(deleteField(fieldCode));
+        await dispatch(deleteField(fieldCode));
+        dispatch(getAllField());
     };
 
     const handleEditButtonClick = (field) => {
