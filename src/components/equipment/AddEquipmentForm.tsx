@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
-import { addEquipment } from "@/redux/EquipmentSlice";
 import {EquipmentModel} from "@/model/EquipmentModel";
 import EquipmentInputModel from "@/components/equipment/EquipmentInputModel";
+import {saveEquipment} from "@/redux/EquipmentSlice";
+import {AppDispatch} from "@/store/store";
 
 const AddEquipmentForm = ({ isOpen, onClose }) => {
     const [equipmentId, setEquipmentId] = useState("");
@@ -14,7 +15,7 @@ const AddEquipmentForm = ({ isOpen, onClose }) => {
     const [assignedStaff, setAssignedStaff] = useState("");
     const [assignedField, setAssignedField] = useState("");
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,7 +28,7 @@ const AddEquipmentForm = ({ isOpen, onClose }) => {
             assignedField
         );
         console.log('Equipment added:', newEquipment);
-        dispatch(addEquipment(newEquipment));
+        dispatch(saveEquipment(newEquipment));
         onClose();
     };
 

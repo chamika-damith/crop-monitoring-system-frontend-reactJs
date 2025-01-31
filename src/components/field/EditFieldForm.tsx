@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import FieldInputModel from "@/components/field/FieldInputModel";
 import {getAllField, updateField} from "@/redux/FieldSlice";
+import {AppDispatch} from "@/store/store";
 
 const EditFieldForm = ({ isOpen, onClose, fieldData }) => {
     const [fieldCode, setFieldCode] = useState("");
@@ -13,7 +14,7 @@ const EditFieldForm = ({ isOpen, onClose, fieldData }) => {
     const [fieldSize, setFieldSize] = useState("");
     const [img_1, setImg_1] = useState<File | null>(null);
     const [img_2, setImg_2] = useState<File | null>(null);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         if (isOpen && fieldData) {

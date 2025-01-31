@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import AddStaffForm from "@/components/staff/AddStaffForm";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/store/store";
-import {deleteStaff} from "@/redux/StaffSlice";
+import {AppDispatch, RootState} from "@/store/store";
+import {deleteStaff, getAllStaff} from "@/redux/StaffSlice";
 import {Button} from "@/components/ui/button";
 import EditStaffForm from "@/components/staff/EditStaffForm";
 import ViewStaff from "@/components/staff/ViewStaff";
@@ -11,15 +11,20 @@ import {Input} from "@/components/ui/input";
 const Staff = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const staffs = useSelector((state:RootState)=>state.staff);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
     const [currentStaffData, setCurrentStaffData] = useState(null);
 
+    useEffect(() => {
+        dispatch(getAllStaff());
+    }, [dispatch]);
 
-    const handleDeleteStaff = (staffId) => {
+
+    async function handleDeleteStaff (staffId) {
         console.log("Deleting staff with code:", staffId);
-        dispatch(deleteStaff(staffId));
+        await dispatch(deleteStaff(staffId));
+        dispatch(getAllStaff());
     };
 
     const handleEditStaff = (staff) => {

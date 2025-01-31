@@ -19,6 +19,11 @@ const EquipmentInputModel = ({
     const fields = useSelector((state:RootState)=>state.field);
     const staffs = useSelector((state:RootState)=>state.staff);
 
+    const handleChange = (e) => {
+        const value = e.target.value === "Available";
+        setEquipmentStatus(value);
+    };
+
     return (
         <div className="space-y-4">
             <div className="mb-4">
@@ -61,8 +66,8 @@ const EquipmentInputModel = ({
                 <label htmlFor="equipmentStatus" className="block mb-2">Status</label>
                 <select
                     id="equipmentStatus"
-                    value={equipmentStatus}
-                    onChange={(e) => setEquipmentStatus(e.target.value)}
+                    value={equipmentStatus ? "Available" : "Not Available"}
+                    onChange={handleChange}
                     required
                     className="border border-gray-300 rounded w-full p-2"
                 >

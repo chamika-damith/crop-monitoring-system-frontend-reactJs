@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/store/store";
+import {AppDispatch, RootState} from "@/store/store";
 import {StaffModel} from "@/model/StaffModel";
-import { updateStaff} from "@/redux/StaffSlice";
+import {getAllStaff, updateStaff} from "@/redux/StaffSlice";
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
 import StaffInputModel from "@/components/staff/StaffInputModel";
@@ -42,9 +42,9 @@ const EditStaffForm = ({ isOpen, onClose, staffData }) => {
     }, [isOpen, staffData]);
 
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
-    const handleSubmit = (e) => {
+    async function handleSubmit (e) {
         e.preventDefault();
         const staffModel = new StaffModel(
             staffId,
@@ -62,7 +62,8 @@ const EditStaffForm = ({ isOpen, onClose, staffData }) => {
             vehicle
         );
         console.log('Form updated:', staffModel);
-        dispatch(updateStaff(staffModel));
+        await dispatch(updateStaff(staffModel));
+        dispatch(getAllStaff());
         onClose();
     };
 
@@ -122,7 +123,7 @@ const EditStaffForm = ({ isOpen, onClose, staffData }) => {
                                 type="submit"
                                 className="bg-zinc-900 text-white hover:bg-zinc-800"
                             >
-                                Add Staff
+                                Save Staff
                             </Button>
                         </div>
                     </form>

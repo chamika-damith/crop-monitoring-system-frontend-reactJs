@@ -1,4 +1,3 @@
-import {FieldModel} from "@/model/FieldModel";
 
 export class StaffModel {
     staffId: string;
@@ -12,7 +11,7 @@ export class StaffModel {
     contactNo: string;
     email: string;
     role: string;
-    field: FieldModel[];
+    field: string[];
     vehicle: string[];
 
     constructor(
@@ -27,7 +26,7 @@ export class StaffModel {
         contactNo: string,
         email: string,
         role: string,
-        field: FieldModel[],
+        field: string[],
         vehicle: string[]
     ) {
         this.staffId = staffId;

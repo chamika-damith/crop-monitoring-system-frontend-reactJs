@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {useDispatch, useSelector} from "react-redux";
-import { addStaff } from "@/redux/StaffSlice";
 import { StaffModel } from "@/model/StaffModel";
-import {RootState} from "@/store/store";
+import {AppDispatch, RootState} from "@/store/store";
 import StaffInputModel from "@/components/staff/StaffInputModel";
+import {saveStaff} from "@/redux/StaffSlice";
 
 const AddStaffForm = ({ isOpen, onClose }) => {
     const [staffId, setStaffId] = useState("");
@@ -24,7 +24,7 @@ const AddStaffForm = ({ isOpen, onClose }) => {
     const fields = useSelector((state:RootState)=>state.field);
 
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,7 +44,7 @@ const AddStaffForm = ({ isOpen, onClose }) => {
             vehicle
         );
         console.log('Form submitted:', staffModel);
-        dispatch(addStaff(staffModel));
+        dispatch(saveStaff(staffModel));
         onClose();
     };
 

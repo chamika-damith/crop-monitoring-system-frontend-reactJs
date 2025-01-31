@@ -3,8 +3,9 @@ import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/
 import CropInputModel from "@/components/crop/CropInputModel";
 import {Button} from "@/components/ui/button";
 import {CropModel} from "@/model/CropModel";
-import { updateCrop} from "@/redux/CropSlice";
+import {getAllCrops, updateCrop} from "@/redux/CropSlice";
 import {useDispatch} from "react-redux";
+import {AppDispatch} from "@/store/store";
 
 const EditCropForm = ({ isOpen, onClose, cropsData }) => {
     const [cropCode, setCropCode] = useState("");
@@ -28,9 +29,9 @@ const EditCropForm = ({ isOpen, onClose, cropsData }) => {
     }, [isOpen, cropsData]);
 
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
-    const handleSubmit = (e) => {
+    async function handleSubmit (e) {
         e.preventDefault();
         const cropModel = new CropModel(
             cropCode,
@@ -42,7 +43,8 @@ const EditCropForm = ({ isOpen, onClose, cropsData }) => {
             cropImage
         );
         console.log('Form updated:', cropModel);
-        dispatch(updateCrop(cropModel));
+        await dispatch(updateCrop(cropModel));
+        dispatch(getAllCrops())
         onClose();
     };
 

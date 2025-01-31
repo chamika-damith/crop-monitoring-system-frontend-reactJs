@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch} from "react-redux";
 import {EquipmentModel} from "@/model/EquipmentModel";
-import { updateEquipment} from "@/redux/EquipmentSlice";
+import {getAllEquipment, updateEquipment} from "@/redux/EquipmentSlice";
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import EquipmentInputModel from "@/components/equipment/EquipmentInputModel";
 import {Button} from "@/components/ui/button";
+import {AppDispatch} from "@/store/store";
 
 const EditEquipmentForm = ({ isOpen, onClose, equipmentData }) => {
     const [equipmentId, setEquipmentId] = useState("");
@@ -14,7 +15,7 @@ const EditEquipmentForm = ({ isOpen, onClose, equipmentData }) => {
     const [assignedStaff, setAssignedStaff] = useState("");
     const [assignedField, setAssignedField] = useState("");
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         if (isOpen && equipmentData) {
@@ -27,7 +28,7 @@ const EditEquipmentForm = ({ isOpen, onClose, equipmentData }) => {
         }
     }, [isOpen, equipmentData]);
 
-    const handleSubmit = (e) => {
+    async function handleSubmit(e) {
         e.preventDefault();
         const newEquipment = new EquipmentModel(
             equipmentId,
@@ -38,7 +39,8 @@ const EditEquipmentForm = ({ isOpen, onClose, equipmentData }) => {
             assignedField
         );
         console.log('Equipment added:', newEquipment);
-        dispatch(updateEquipment(newEquipment));
+        await dispatch(updateEquipment(newEquipment));
+        dispatch(getAllEquipment())
         onClose();
     };
     return (

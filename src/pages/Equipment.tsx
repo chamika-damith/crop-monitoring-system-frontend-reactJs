@@ -1,23 +1,28 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/store/store";
-import {deleteEquipment} from "@/redux/EquipmentSlice";
+import {AppDispatch, RootState} from "@/store/store";
+import {deleteEquipment, getAllEquipment} from "@/redux/EquipmentSlice";
 import AddEquipmentForm from "@/components/equipment/AddEquipmentForm";
 import EditEquipmentForm from "@/components/equipment/EditEquipmentForm";
 
 const Equipment = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const equipment = useSelector((state:RootState)=>state.equipment)
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [currentEquipmentData, setCurrentEquipmentData] = useState(null);
 
+    useEffect(() => {
+        dispatch(getAllEquipment());
+    }, [dispatch]);
 
-    const handleDeleteEquipment = (equipmentId) => {
+
+    async function handleDeleteEquipment (equipmentId) {
         console.log("Deleting equipment with code:", equipmentId);
-        dispatch(deleteEquipment(equipmentId));
+        await dispatch(deleteEquipment(equipmentId));
+        dispatch(getAllEquipment());
     };
 
     const handleEditButtonClick = (equipment) => {
@@ -76,7 +81,7 @@ const Equipment = () => {
                                     <td className="p-4">{item.equipmentId}</td>
                                     <td className="p-4">{item.equipmentName}</td>
                                     <td className="p-4">{item.equipmentType}</td>
-                                    <td className="p-4">{item.equipmentStatus}</td>
+                                    <td className="p-4">{item.equipmentStatus ? "Available" : "Not Available"}</td>
                                     <td className="p-4">{item.assignedStaff}</td>
                                     <td className="p-4">{item.assignedField}</td>
                                     <td className="p-4">

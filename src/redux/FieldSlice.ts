@@ -66,43 +66,43 @@ const FieldSlice=createSlice({
     extraReducers: (builder) => {
         builder
             // Save Field
-            .addCase(saveField.pending, (state, action) => {
+            .addCase(saveField.pending, () => {
                 console.log("Pending save field");
             })
             .addCase(saveField.fulfilled, (state, action) => {
                 console.log("Field save fulfilled");
                 state.push(action.payload);
             })
-            .addCase(saveField.rejected, (state, action) => {
+            .addCase(saveField.rejected, () => {
                 console.log("Field save rejected");
             })
 
             // Get All Fields
-            .addCase(getAllField.pending, (state, action) => {
+            .addCase(getAllField.pending, () => {
                 console.log("Pending get all fields");
             })
             .addCase(getAllField.fulfilled, (state, action) => {
                 console.log("Get all fields fulfilled");
                 return action.payload;
             })
-            .addCase(getAllField.rejected, (state, action) => {
+            .addCase(getAllField.rejected, () => {
                 console.log("Get all fields rejected");
             })
 
             // Delete Field
-            .addCase(deleteField.pending, (state, action) => {
+            .addCase(deleteField.pending, () => {
                 console.log("Pending delete field");
             })
             .addCase(deleteField.fulfilled, (state, action) => {
                 console.log("Delete field fulfilled");
                 return state.filter(field => field.fieldCode !== action.payload.fieldCode);
             })
-            .addCase(deleteField.rejected, (state, action) => {
+            .addCase(deleteField.rejected, () => {
                 console.log("Delete field rejected");
             })
 
             // Update Field
-            .addCase(updateField.pending, (state, action) => {
+            .addCase(updateField.pending, () => {
                 console.log("Pending update field");
             })
             .addCase(updateField.fulfilled, (state, action) => {
@@ -112,7 +112,7 @@ const FieldSlice=createSlice({
                     state[index] = action.payload;
                 }
             })
-            .addCase(updateField.rejected, (state, action) => {
+            .addCase(updateField.rejected, () => {
                 console.log("Update field rejected");
             });
     }

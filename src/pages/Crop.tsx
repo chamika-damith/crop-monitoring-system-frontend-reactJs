@@ -1,23 +1,29 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import AddCropForm from "@/components/crop/AddCropFrom";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/store/store";
-import {deleteCrop} from "@/redux/CropSlice";
+import {AppDispatch, RootState} from "@/store/store";
+import {deleteCrop, getAllCrops} from "@/redux/CropSlice";
 import EditCropForm from "@/components/crop/EditCropForm";
 
 const Crop = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const crops = useSelector((state:RootState)=>state.crop)
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [currentCropData, setCurrentCropData] = useState(null);
 
 
-    const handleDeleteCrop = (cropCode) => {
+    useEffect(() => {
+        dispatch(getAllCrops());
+    }, [dispatch]);
+
+
+    async function handleDeleteCrop (cropCode){
         console.log("Deleting field with code:", cropCode);
-        dispatch(deleteCrop(cropCode));
+        await dispatch(deleteCrop(cropCode));
+        dispatch(getAllCrops());
     };
 
     const handleEditButtonClick = (field) => {

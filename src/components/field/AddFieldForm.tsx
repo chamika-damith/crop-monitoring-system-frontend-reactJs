@@ -5,6 +5,7 @@ import FieldInputModel from "@/components/field/FieldInputModel";
 import {useDispatch} from "react-redux";
 import {FieldModel} from "@/model/FieldModel";
 import {saveField} from "@/redux/FieldSlice";
+import {AppDispatch} from "@/store/store";
 
 const AddFieldForm = ({isOpen, onClose}) => {
 
@@ -15,7 +16,7 @@ const AddFieldForm = ({isOpen, onClose}) => {
     const [img_1, setImg_1] = useState<File | null>(null);
     const [img_2, setImg_2] = useState<File | null>(null);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleSubmit = (e) => {
         e.preventDefault();

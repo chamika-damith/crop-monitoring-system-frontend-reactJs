@@ -215,7 +215,7 @@ const StaffInputModel = (props) => {
                             <select
                                 id="vehicle"
                                 className="border border-gray-300 rounded w-full p-2"
-                                onChange={(e) => props.setVehicle(e.target.value)}
+                                onChange={(e) => props.setVehicle([...props,e.target.value])}
                             >
                                 <option value="">Select a Vehicle</option>
                                 <option value="Car">Car</option>

@@ -6,6 +6,14 @@ import {useSelector} from "react-redux";
 
 const VehicleInputModel = (props) => {
     const staffs = useSelector((state:RootState)=> state.staff)
+
+
+    const handleChange = (e) => {
+        const value = e.target.value === "Available";
+        props.setStatus(value);
+    };
+
+
     return (
         <div className="space-y-4">
             <div>
@@ -36,9 +44,9 @@ const VehicleInputModel = (props) => {
             </div>
             <div>
                 <label htmlFor="status" className="block mb-2">Status</label>
-                <select id="status" value={props.status}
+                <select id="status" value={props.status ? "Available" : "Not Available"}
                         className="border border-gray-300 rounded w-full p-2"
-                        onChange={(e) => props.setStatus(e.target.value)} required>
+                        onChange={handleChange} required>
                     <option value="Select status">Select status</option>
                     <option value="Available">Available</option>
                     <option value="Out of Service">Out of Service</option>

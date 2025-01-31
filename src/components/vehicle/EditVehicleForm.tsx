@@ -3,8 +3,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import {VehicleModel} from "@/model/VehicleModel";
-import {updateVehicle} from "@/redux/VehicleSlice";
+import {getAllVehicles, updateVehicle} from "@/redux/VehicleSlice";
 import VehicleInputModel from "@/components/vehicle/VehicleInputModel";
+import {AppDispatch} from "@/store/store";
 
 const EditVehicleForm = ({ isOpen, onClose, vehicle }) => {
     const [vehicleId,setVehicleId] = useState("");
@@ -15,7 +16,7 @@ const EditVehicleForm = ({ isOpen, onClose, vehicle }) => {
     const [allocatedStaff, setAllocatedStaff] = useState("");
     const [remarks, setRemarks] = useState("");
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         if (vehicle) {
@@ -29,7 +30,7 @@ const EditVehicleForm = ({ isOpen, onClose, vehicle }) => {
         }
     }, [vehicle]);
 
-    const handleSubmit = (e) => {
+    async function handleSubmit (e)  {
         e.preventDefault();
         const updatedVehicle = new VehicleModel(
             vehicleId,
@@ -41,7 +42,8 @@ const EditVehicleForm = ({ isOpen, onClose, vehicle }) => {
             remarks
         );
         console.log('Vehicle updated:', updatedVehicle);
-        dispatch(updateVehicle(updatedVehicle));
+        await dispatch(updateVehicle(updatedVehicle));
+        dispatch(getAllVehicles());
         onClose();
     };
 

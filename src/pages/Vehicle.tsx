@@ -1,23 +1,28 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import AddVehicleForm from "@/components/vehicle/AddVehicleForm";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/store/store";
-import {deleteVehicle} from "@/redux/VehicleSlice";
+import {AppDispatch, RootState} from "@/store/store";
+import {deleteVehicle, getAllVehicles} from "@/redux/VehicleSlice";
 import EditVehicleForm from "@/components/vehicle/EditVehicleForm";
+import {getAllStaff} from "@/redux/StaffSlice";
 
 const Vehicle = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const vehicles = useSelector((state:RootState)=>state.vehicle)
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [currentVehicleData, setCurrentVehicleData] = useState(null);
 
+    useEffect(() => {
+        dispatch(getAllVehicles());
+    }, [dispatch]);
 
-    const handleDeleteVehicle = (vehicleId) => {
+    async function handleDeleteVehicle (vehicleId) {
         console.log("Deleting field with code:", vehicleId);
-        dispatch(deleteVehicle(vehicleId));
+        await dispatch(deleteVehicle(vehicleId));
+        dispatch(getAllVehicles());
     };
 
     const handleEditButtonClick = (vehicle) => {
@@ -82,7 +87,7 @@ const Vehicle = () => {
                                     <td className="p-4">{vehicle.licensePlateNumber}</td>
                                     <td className="p-4">{vehicle.vehicleCategory}</td>
                                     <td className="p-4">{vehicle.fuelType}</td>
-                                    <td className="p-4">{vehicle.status}</td>
+                                    <td className="p-4">{vehicle.status ? "Available" : "Not Available"}</td>
                                     <td className="p-4">{vehicle.allocatedStaff}</td>
                                     <td className="p-4">{vehicle.remarks}</td>
                                     <td className="p-4 space-x-2">

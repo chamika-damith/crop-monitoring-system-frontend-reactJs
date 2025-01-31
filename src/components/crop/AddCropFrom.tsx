@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
-import { addCrop } from "@/redux/CropSlice";
 import { CropModel } from "@/model/CropModel";
 import CropInputModel from "@/components/crop/CropInputModel";
+import {saveCrop} from "@/redux/CropSlice";
+import {AppDispatch} from "@/store/store";
 
 const AddCropForm = ({ isOpen, onClose }) => {
     const [cropCode, setCropCode] = useState("");
@@ -15,7 +16,7 @@ const AddCropForm = ({ isOpen, onClose }) => {
     const [cropSeason, setCropSeason] = useState("");
     const [cropImage, setCropImage] = useState<File | null>(null);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,7 +30,7 @@ const AddCropForm = ({ isOpen, onClose }) => {
             cropImage
         );
         console.log('Form submitted:', cropModel);
-        dispatch(addCrop(cropModel));
+        dispatch(saveCrop(cropModel));
         onClose();
     };
 

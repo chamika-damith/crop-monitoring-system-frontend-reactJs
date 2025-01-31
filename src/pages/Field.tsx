@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import AddFieldForm from "@/components/field/AddFieldForm";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/store/store";
+import {AppDispatch, RootState} from "@/store/store";
 import EditFieldForm from "@/components/field/EditFieldForm";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
@@ -14,7 +14,7 @@ const Field = () => {
     const [currentFieldData, setCurrentFieldData] = useState(null);
 
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         dispatch(getAllField());

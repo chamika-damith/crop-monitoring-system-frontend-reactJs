@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
-import { addVehicle } from "@/redux/VehicleSlice";
+import { saveVehicle} from "@/redux/VehicleSlice";
 import {VehicleModel} from "@/model/VehicleModel";
 import VehicleInputModel from "@/components/vehicle/VehicleInputModel";
+import {AppDispatch} from "@/store/store";
 
 const AddVehicleForm = ({ isOpen, onClose }) => {
     const [vehicleId,setVehicleId] = useState("");
@@ -15,7 +16,7 @@ const AddVehicleForm = ({ isOpen, onClose }) => {
     const [allocatedStaff, setAllocatedStaff] = useState("");
     const [remarks, setRemarks] = useState("");
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,7 +30,7 @@ const AddVehicleForm = ({ isOpen, onClose }) => {
             remarks
         );
         console.log('Vehicle added:', vehicleModel);
-        dispatch(addVehicle(vehicleModel));
+        dispatch(saveVehicle(vehicleModel));
         onClose();
     };
 

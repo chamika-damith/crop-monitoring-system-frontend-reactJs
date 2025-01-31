@@ -14,5 +14,5 @@ export const store = configureStore({
         equipment:EquipmentSlice,
     },
 });
-
+export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
