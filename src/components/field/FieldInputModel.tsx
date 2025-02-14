@@ -21,6 +21,7 @@ const FieldInputModel = (props) => {
                                 onChange={(e) => props.setFieldCode(e.target.value)}
                                 placeholder="Auto-generated field code"
                                 value={props.fieldCode}
+                                readOnly={true}
                             />
                         </div>
 

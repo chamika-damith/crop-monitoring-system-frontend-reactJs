@@ -6,9 +6,10 @@ import {EquipmentModel} from "@/model/EquipmentModel";
 import EquipmentInputModel from "@/components/equipment/EquipmentInputModel";
 import {saveEquipment} from "@/redux/EquipmentSlice";
 import {AppDispatch} from "@/store/store";
+import {generateId} from "@/components/generateId";
 
 const AddEquipmentForm = ({ isOpen, onClose }) => {
-    const [equipmentId, setEquipmentId] = useState("");
+    let [equipmentId, setEquipmentId] = useState("");
     const [equipmentName, setEquipmentName] = useState("");
     const [equipmentType, setEquipmentType] = useState("");
     const [equipmentStatus, setEquipmentStatus] = useState(false);
@@ -20,7 +21,7 @@ const AddEquipmentForm = ({ isOpen, onClose }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const newEquipment = new EquipmentModel(
-            equipmentId,
+            equipmentId=generateId('equipment'),
             equipmentName,
             equipmentType,
             equipmentStatus,

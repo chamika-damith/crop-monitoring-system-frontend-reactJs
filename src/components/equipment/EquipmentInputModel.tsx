@@ -35,6 +35,8 @@ const EquipmentInputModel = ({
                     onChange={(e) => setEquipmentId(e.target.value)}
                     required
                     className="border border-gray-300 rounded w-full p-2"
+                    readOnly={true}
+                    placeholder="Auto generate Equipment ID"
                 />
             </div>
             <div className="mb-4">

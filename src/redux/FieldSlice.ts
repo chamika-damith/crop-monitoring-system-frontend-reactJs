@@ -47,7 +47,7 @@ export const deleteField = createAsyncThunk(
 )
 
 export const updateField = createAsyncThunk(
-    "customer/updateCustomer",
+    "field/updateField",
     async (f:FieldModel) => {
         try {
             const response = await api.put('/update', f);

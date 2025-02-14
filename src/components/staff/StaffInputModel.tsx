@@ -20,6 +20,8 @@ const StaffInputModel = (props) => {
                                 className="mt-1 bg-zinc-100/50 text-zinc-700 focus:border-zinc-400 focus:ring focus:ring-zinc-200"
                                 onChange={(e) => props.setStaffId(e.target.value)}
                                 value={props.staffId}
+                                readOnly={true}
+                                placeholder="Auto generate Staff ID"
                             />
                         </div>
 

@@ -6,9 +6,10 @@ import { StaffModel } from "@/model/StaffModel";
 import {AppDispatch, RootState} from "@/store/store";
 import StaffInputModel from "@/components/staff/StaffInputModel";
 import {saveStaff} from "@/redux/StaffSlice";
+import {generateId} from "@/components/generateId";
 
 const AddStaffForm = ({ isOpen, onClose }) => {
-    const [staffId, setStaffId] = useState("");
+    let [staffId, setStaffId] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [designation, setDesignation] = useState("");
@@ -29,7 +30,7 @@ const AddStaffForm = ({ isOpen, onClose }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const staffModel = new StaffModel(
-            staffId,
+            staffId=generateId('staff'),
             firstName,
             lastName,
             designation,

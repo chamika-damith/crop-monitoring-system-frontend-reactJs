@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState} from 'react';
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
 import FieldInputModel from "@/components/field/FieldInputModel";
@@ -6,10 +6,11 @@ import {useDispatch} from "react-redux";
 import {FieldModel} from "@/model/FieldModel";
 import {saveField} from "@/redux/FieldSlice";
 import {AppDispatch} from "@/store/store";
+import {generateId} from "@/components/generateId";
 
 const AddFieldForm = ({isOpen, onClose}) => {
 
-    const [fieldCode, setFieldCode] = useState("");
+    let [fieldCode, setFieldCode] = useState("");
     const [fieldName, setFieldName] = useState("");
     const [fieldLocation, setFieldLocation] = useState("");
     const [fieldSize, setFieldSize] = useState("");
@@ -20,8 +21,9 @@ const AddFieldForm = ({isOpen, onClose}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const fieldModel = new FieldModel(
-            fieldCode,
+            fieldCode=generateId("field"),
             fieldName,
             fieldLocation,
             fieldSize,
@@ -44,7 +46,7 @@ const AddFieldForm = ({isOpen, onClose}) => {
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <FieldInputModel setFieldCode={setFieldCode} setFieldName={setFieldName}
+                    <FieldInputModel fieldCode={fieldCode} setFieldName={setFieldName}
                                      setFieldLocation={setFieldLocation} setFieldSize={setFieldSize}
                                      setImg_1={setImg_1} setImg_2={setImg_2}
                     />

@@ -6,9 +6,10 @@ import { saveVehicle} from "@/redux/VehicleSlice";
 import {VehicleModel} from "@/model/VehicleModel";
 import VehicleInputModel from "@/components/vehicle/VehicleInputModel";
 import {AppDispatch} from "@/store/store";
+import {generateId} from "@/components/generateId";
 
 const AddVehicleForm = ({ isOpen, onClose }) => {
-    const [vehicleId,setVehicleId] = useState("");
+    let [vehicleId,setVehicleId] = useState("");
     const [licensePlateNumber, setLicensePlateNumber] = useState("");
     const [vehicleCategory, setVehicleCategory] = useState("");
     const [fuelType, setFuelType] = useState("");
@@ -21,7 +22,7 @@ const AddVehicleForm = ({ isOpen, onClose }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const vehicleModel = new VehicleModel(
-            vehicleId,
+            vehicleId=generateId('vehicle'),
             licensePlateNumber,
             vehicleCategory,
             fuelType,
@@ -47,6 +48,7 @@ const AddVehicleForm = ({ isOpen, onClose }) => {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <VehicleInputModel
+                        vehicleId={vehicleId}
                         setVehicleId={setVehicleId}
                         setLicensePlateNumber={setLicensePlateNumber}
                         setVehicleCategory={setVehicleCategory}

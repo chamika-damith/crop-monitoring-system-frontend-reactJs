@@ -15,9 +15,10 @@ const CropInputModel = (props) => {
                         <Label htmlFor="cropCode" className="text-sm font-medium text-zinc-700">Crop Code</Label>
                         <Input type="text" id="cropCode"
                                className="border border-gray-300 rounded w-full p-2"
-                               placeholder="Enter crop code"
+                               placeholder="Auto generate Crop code"
                                value={props.cropCode}
                                onChange={(e) => props.setCropCode(e.target.value)}
+                               readOnly={true}
                                required/>
                     </div>
                     <div>

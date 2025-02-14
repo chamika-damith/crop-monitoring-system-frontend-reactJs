@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
@@ -6,9 +6,10 @@ import { CropModel } from "@/model/CropModel";
 import CropInputModel from "@/components/crop/CropInputModel";
 import {saveCrop} from "@/redux/CropSlice";
 import {AppDispatch} from "@/store/store";
+import {generateId} from "@/components/generateId";
 
 const AddCropForm = ({ isOpen, onClose }) => {
-    const [cropCode, setCropCode] = useState("");
+    let [cropCode, setCropCode] = useState("");
     const [cropName, setCropName] = useState("");
     const [cropScientificName, setCropScientificName] = useState("");
     const [cropCategory, setCropCategory] = useState("");
@@ -18,11 +19,12 @@ const AddCropForm = ({ isOpen, onClose }) => {
 
     const dispatch = useDispatch<AppDispatch>();
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const cropModel = new CropModel(
-            cropCode,
-           cropScientificName,
+            cropCode=generateId("crop"),
+            cropScientificName,
             cropCategory,
             cropField,
             cropName,
@@ -46,7 +48,7 @@ const AddCropForm = ({ isOpen, onClose }) => {
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <CropInputModel setCropCode={setCropCode} setCropName={setCropName} setCropScientificName={setCropScientificName}
+                    <CropInputModel cropCode={cropCode} setCropName={setCropName} setCropScientificName={setCropScientificName}
                                     setCropCategory={setCropCategory} setCropField={setCropField} setCropSeason={setCropSeason} setCropImage={setCropImage}/>
                     <div className="flex justify-end space-x-4">
                         <Button

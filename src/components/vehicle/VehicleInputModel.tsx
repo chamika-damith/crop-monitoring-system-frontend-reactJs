@@ -19,6 +19,8 @@ const VehicleInputModel = (props) => {
             <div>
                 <label htmlFor="vehicleId" className="block mb-2">Vehicle Id</label>
                 <Input type="text" id="vehicleId" value={props.vehicleId} onChange={(e) => props.setVehicleId(e.target.value)}
+                       readOnly={true}
+                       placeholder="Auto generate Vehicle ID"
                        required/>
             </div>
             <div>
